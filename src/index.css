@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		/* Dark (default) — de acordo com a paleta original */
+		--color-bg: #0B0B10;
+		--color-surface: #121217;
+		--color-accent: #7C5CFF;
+		--color-accent-light: #9B8CFF;
+		--color-text: #FFFFFF;
+		--color-text-secondary: #BFC3D6;
+		--color-success: #38D39F;
+		--color-warning: #FFB86B;
+		--color-error: #EF4444;
+		--color-border: rgba(255, 255, 255, 0.12);
+		--color-input-bg: rgba(255, 255, 255, 0.05);
+		--color-overlay-light: rgba(255, 255, 255, 0.05);
+		--color-overlay-medium: rgba(255, 255, 255, 0.1);
+		--color-overlay-dark: rgba(255, 255, 255, 0.03);
+	}
+	:root[data-theme="light"] {
+		--color-bg: #ffffff;
+		--color-surface: #f8fafc;
+		--color-accent: #7C5CFF;
+		--color-accent-light: #9B8CFF;
+		--color-text: #0F172A;
+		--color-text-secondary: #64748B;
+		--color-success: #16A34A;
+		--color-warning: #F59E0B;
+		--color-error: #DC2626;
+		--color-border: rgba(0, 0, 0, 0.12);
+		--color-input-bg: rgba(0, 0, 0, 0.03);
+		--color-overlay-light: rgba(0, 0, 0, 0.05);
+		--color-overlay-medium: rgba(0, 0, 0, 0.1);
+		--color-overlay-dark: rgba(0, 0, 0, 0.03);
+	}
+	html, body, #root {
+		height: 100%;
+		background-color: var(--color-bg);
+		color: var(--color-text);
+		transition: background-color 0.3s ease, color 0.3s ease;
+	}
+	
+	/* Improved focus styles for accessibility */
+	*:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+	
+	/* Better scrollbar styling */
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+	
+	::-webkit-scrollbar-track {
+		background: var(--color-surface);
+	}
+	
+	::-webkit-scrollbar-thumb {
+		background: var(--color-border);
+		border-radius: 4px;
+	}
+	
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--color-accent);
+	}
+	
+	/* Smooth scrolling */
+	html {
+		scroll-behavior: smooth;
+	}
+	
+	/* Better text rendering */
+	body {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+	}
+}
+
+/* Hero gradient that adapts to theme */
+.hero-gradient-overlay { background: none; }
+[data-theme="light"] .hero-gradient-overlay { background: none; }
+
+/* Select styling for dark/light themes - improved contrast */
+select {
+	background-color: var(--color-input-bg);
+	color: var(--color-text);
+	border: 1px solid var(--color-border);
+}
+
+select option {
+	background-color: var(--color-surface);
+	color: var(--color-text);
+	padding: 0.5rem;
+}
+
+select:focus {
+	border-color: var(--color-accent);
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+}
+
+[data-theme="light"] select {
+	background-color: var(--color-input-bg);
+	color: var(--color-text);
+	border-color: var(--color-border);
+}
+
+[data-theme="light"] select option {
+	background-color: var(--color-surface);
+	color: var(--color-text);
+}
+
+/* Input styling for light theme - improved contrast */
+[data-theme="light"] input[type="text"],
+[data-theme="light"] input[type="email"],
+[data-theme="light"] input[type="password"],
+[data-theme="light"] input[type="number"],
+[data-theme="light"] input[type="tel"],
+[data-theme="light"] input[type="url"],
+[data-theme="light"] textarea {
+	background-color: var(--color-input-bg) !important;
+	border-color: var(--color-border) !important;
+	color: var(--color-text) !important;
+}
+
+[data-theme="light"] input[type="text"]::placeholder,
+[data-theme="light"] input[type="email"]::placeholder,
+[data-theme="light"] input[type="password"]::placeholder,
+[data-theme="light"] input[type="number"]::placeholder,
+[data-theme="light"] input[type="tel"]::placeholder,
+[data-theme="light"] input[type="url"]::placeholder,
+[data-theme="light"] textarea::placeholder {
+	color: var(--color-text-secondary) !important;
+	opacity: 0.7;
+}
+
+/* Focus states for inputs */
+input:focus,
+textarea:focus,
+select:focus {
+	border-color: var(--color-accent) !important;
+	box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.1);
+}
+
+/* Border colors for light theme */
+[data-theme="light"] .border-white\/10,
+[data-theme="light"] .border-white\/5 {
+	border-color: var(--color-border) !important;
+}
+
+/* Background colors for light theme - overlay utilities */
+[data-theme="light"] .bg-white\/\[0\.04\],
+[data-theme="light"] .bg-white\/\[0\.03\],
+[data-theme="light"] .bg-white\/\[0\.05\],
+[data-theme="light"] .bg-white\/\[0\.02\] {
+	background-color: var(--color-overlay-dark) !important;
+}
+
+[data-theme="light"] .bg-white\/10 {
+	background-color: var(--color-overlay-medium) !important;
+}
+
+[data-theme="light"] .bg-white\/5 {
+	background-color: var(--color-overlay-light) !important;
+}
+
+/* Text colors for light theme - ensure visibility */
+[data-theme="light"] .text-white {
+	color: var(--color-text) !important;
+}
+
+[data-theme="light"] .text-red-200 {
+	color: #dc2626 !important;
+}
+
+/* Ring colors for light theme */
+[data-theme="light"] .ring-white\/10,
+[data-theme="light"] .ring-white\/5,
+[data-theme="light"] .ring-white\/20 {
+	--tw-ring-color: var(--color-border) !important;
+}
+
+/* Gradient backgrounds for light theme */
+[data-theme="light"] .bg-gradient-to-br.from-\[#0B0B10\] {
+	background: linear-gradient(to bottom right, #ffffff, #f8fafc, #f1f5f9) !important;
+}
+
+[data-theme="light"] .bg-gradient-to-br.from-\[#0B0B10\].via-\[#111126\].to-\[#141429\] {
+	background: linear-gradient(to bottom right, #ffffff, #f8fafc, #f1f5f9) !important;
+}

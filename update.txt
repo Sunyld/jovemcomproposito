@@ -1,0 +1,5 @@
+	MELHORIAS A SEREM FEITAS
+Posição de Discipulado e mentorias
+Colocar comentários
+Adicionar aba de doações.
+implementar chat(Canal)
