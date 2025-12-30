@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import DashboardShell from '../../components/dashboard/DashboardShell';
 import { useInscritos, approveInscricao, updateInscricao } from '../../hooks/useInscritos';
 import { useMentorMentorias, useMentoria } from '../../hooks/useMentorias';
 import { useProfile } from '../../hooks/useProfiles';
 import { toast } from '../../components/Toast';
 import { Card, Button } from '../../components/ui';
-import { CheckCircle2, X, Mail, User, Clock, DollarSign } from 'lucide-react';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import { CheckCircle2, X, User, Clock, DollarSign } from 'lucide-react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import EmptyState from '../../components/EmptyState';
 
@@ -13,25 +14,40 @@ export default function MentorInscricoes() {
 	const { mentorias } = useMentorMentorias();
 	const [selectedMentoria, setSelectedMentoria] = useState<string>('all');
 	const { inscritos, loading } = useInscritos(selectedMentoria === 'all' ? undefined : selectedMentoria);
+	const [approveDialog, setApproveDialog] = useState<{ open: boolean; id: string | null }>({ open: false, id: null });
+	const [rejectDialog, setRejectDialog] = useState<{ open: boolean; id: string | null }>({ open: false, id: null });
+	const [processing, setProcessing] = useState(false);
 
 	const filteredInscritos = inscritos.filter((i) => {
 		if (selectedMentoria === 'all') return true;
 		return i.mentoria_id === selectedMentoria;
 	});
 
-	const handleApprove = async (id: string) => {
+	const handleApprove = async () => {
+		if (!approveDialog.id) return;
+		setProcessing(true);
 		try {
-			await approveInscricao(id);
+			await approveInscricao(approveDialog.id);
+			setApproveDialog({ open: false, id: null });
+			toast({ title: 'Inscrição aprovada', description: 'O usuário agora tem acesso à mentoria.', variant: 'success' });
 		} catch (err) {
 			// Error already handled in hook
+		} finally {
+			setProcessing(false);
 		}
 	};
 
-	const handleReject = async (id: string) => {
+	const handleReject = async () => {
+		if (!rejectDialog.id) return;
+		setProcessing(true);
 		try {
-			await updateInscricao(id, { has_access: false });
+			await updateInscricao(rejectDialog.id, { has_access: false });
+			setRejectDialog({ open: false, id: null });
+			toast({ title: 'Inscrição rejeitada', description: 'O acesso foi negado ao usuário.', variant: 'success' });
 		} catch (err) {
 			// Error already handled in hook
+		} finally {
+			setProcessing(false);
 		}
 	};
 
@@ -82,10 +98,33 @@ export default function MentorInscricoes() {
 							<InscritoCard
 								key={inscrito.id}
 								inscrito={inscrito}
-								onApprove={() => handleApprove(inscrito.id)}
-								onReject={() => handleReject(inscrito.id)}
+								onApprove={() => setApproveDialog({ open: true, id: inscrito.id })}
+								onReject={() => setRejectDialog({ open: true, id: inscrito.id })}
 							/>
 						))}
+				</div>
+			</div>
+			<ConfirmDialog
+				open={approveDialog.open}
+				onClose={() => setApproveDialog({ open: false, id: null })}
+				onConfirm={handleApprove}
+				title="Aprovar inscrição"
+				description="Tem certeza que deseja aprovar esta inscrição? O usuário terá acesso completo à mentoria."
+				confirmText="Aprovar"
+				cancelText="Cancelar"
+				loading={processing}
+			/>
+			<ConfirmDialog
+				open={rejectDialog.open}
+				onClose={() => setRejectDialog({ open: false, id: null })}
+				onConfirm={handleReject}
+				title="Rejeitar inscrição"
+				description="Tem certeza que deseja rejeitar esta inscrição? O acesso será negado ao usuário."
+				confirmText="Rejeitar"
+				cancelText="Cancelar"
+				variant="danger"
+				loading={processing}
+			/>
 					</div>
 				)}
 			</div>

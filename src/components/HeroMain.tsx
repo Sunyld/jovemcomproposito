@@ -21,6 +21,9 @@ export default function HeroMain() {
 						Conecte-se a profissionais experientes, participe de mentorias online ou presenciais e acelere sua jornada com conteúdos práticos,
 						encontros ao vivo e materiais de apoio exclusivos.
 					</p>
+					<p className="mt-2 text-sm text-purple font-medium">
+						Mais do que simplesmente viver, viva com propósito.
+					</p>
 					<div className="mt-8 flex flex-col sm:flex-row gap-3">
 						<Link to="/signup" className="px-6 py-3 rounded-xl bg-purple text-white font-medium shadow-elevate text-center ring-1 ring-inset ring-border hover:ring-purple hover:bg-purple-light transition-colors">
 							Cadastrar

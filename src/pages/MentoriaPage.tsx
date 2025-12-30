@@ -5,6 +5,7 @@ import { createInscricao } from '../hooks/useInscritos';
 import { getSignedUrl } from '../hooks/useStorage';
 import { useUserInscricoes } from '../hooks/useInscritos';
 import Modal from '../components/Modal';
+import ConfirmDialog from '../components/ConfirmDialog';
 import { useState } from 'react';
 import { toast } from '../components/Toast';
 import { useAuth } from '../hooks/useAuth';
@@ -16,9 +17,8 @@ export default function MentoriaPage() {
 	const { mentoria, loading: mentoriaLoading } = useMentoria(id);
 	const { profile: mentorProfile, loading: mentorLoading } = useProfile(mentoria?.mentor_id);
 	const { inscritos: userInscricoes } = useUserInscricoes();
-	const [open, setOpen] = useState(false);
+	const [confirmOpen, setConfirmOpen] = useState(false);
 	const [contact, setContact] = useState(false);
-	const [message, setMessage] = useState('');
 	const [submitting, setSubmitting] = useState(false);
 	const [downloading, setDownloading] = useState(false);
 	const { user } = useAuth();
@@ -74,8 +74,7 @@ export default function MentoriaPage() {
 		}
 	}
 
-	async function handleInscricao(e: React.FormEvent) {
-		e.preventDefault();
+	async function handleInscricao() {
 		if (!user) {
 			toast({ title: 'Acesso restrito', description: 'Faça login para se inscrever', variant: 'error' });
 			return;
@@ -83,9 +82,13 @@ export default function MentoriaPage() {
 
 		setSubmitting(true);
 		try {
-			await createInscricao(mentoria.id, message || undefined);
-			setOpen(false);
-			setMessage('');
+			await createInscricao(mentoria.id);
+			setConfirmOpen(false);
+			toast({ 
+				title: 'Pedido enviado com sucesso', 
+				description: 'O mentor será notificado sobre sua solicitação.', 
+				variant: 'success' 
+			});
 		} catch (err) {
 			// Error already handled in hook
 		} finally {
@@ -129,8 +132,8 @@ export default function MentoriaPage() {
 						)}
 						<div className="mt-4 flex flex-col gap-2">
 							{!userInscricao ? (
-								<button onClick={() => setOpen(true)} className="w-full px-4 py-2 rounded-lg bg-purple text-white hover:bg-purple-light transition-colors">
-									{isFree ? 'Participar' : 'Solicitar acesso'}
+								<button onClick={() => setConfirmOpen(true)} className="w-full px-4 py-2 rounded-lg bg-purple text-white hover:bg-purple-light transition-colors">
+									Pedir para participar da mentoria
 								</button>
 							) : hasAccess ? (
 								<button
@@ -154,19 +157,16 @@ export default function MentoriaPage() {
 					</div>
 				</div>
 			</aside>
-			<Modal title={isFree ? 'Participar' : 'Solicitar acesso'} open={open} onClose={() => setOpen(false)}>
-				<form onSubmit={handleInscricao} className="space-y-3">
-					<textarea
-						value={message}
-						onChange={(e) => setMessage(e.target.value)}
-						className="w-full min-h-28 rounded-lg bg-input border border-border p-3 outline-none focus:border-purple text-text-primary placeholder:text-text-secondary"
-						placeholder="Mensagem (opcional)"
-					/>
-					<button type="submit" disabled={submitting} className="w-full px-4 py-2 rounded-lg bg-purple text-white disabled:opacity-50 hover:bg-purple-light transition-colors">
-						{submitting ? 'Enviando...' : 'Enviar'}
-					</button>
-				</form>
-			</Modal>
+			<ConfirmDialog
+				open={confirmOpen}
+				onClose={() => setConfirmOpen(false)}
+				onConfirm={handleInscricao}
+				title="Confirmar participação"
+				description="Tem certeza que deseja solicitar participação nesta mentoria?"
+				confirmText="Confirmar"
+				cancelText="Cancelar"
+				loading={submitting}
+			/>
 			<Modal title="Contactar mentor" open={contact} onClose={() => setContact(false)}>
 				<p className="text-sm text-text-secondary">Entre em contato com {mentorProfile?.full_name || 'o mentor'} para finalizar a inscrição.</p>
 				<div className="mt-3 rounded-xl bg-surface border border-border p-4 text-sm">

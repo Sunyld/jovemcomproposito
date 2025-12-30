@@ -1,25 +1,44 @@
-import { Link } from 'react-router-dom';
-import { useMentorMentorias } from '../../hooks/useMentorias';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMentorMentorias, deleteMentoria } from '../../hooks/useMentorias';
 import { useInscritos } from '../../hooks/useInscritos';
 import { useAuth } from '../../hooks/useAuth';
 import DashboardShell from '../../components/dashboard/DashboardShell';
 import DevocionalCard from '../../components/DevocionalCard';
 import { Card, Button } from '../../components/ui';
-import { PlusCircle, Edit2, FileText, Users2, Eye } from 'lucide-react';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import { PlusCircle, Edit2, FileText, Users2, Eye, Trash2 } from 'lucide-react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import EmptyState from '../../components/EmptyState';
+import { useState } from 'react';
+import { toast } from '../../components/Toast';
 
 export default function MentorIndex() {
 	const { profile } = useAuth();
+	const navigate = useNavigate();
 	const { mentorias, loading: mentoriasLoading } = useMentorMentorias();
-	// Get inscritos for all mentorias - we'll use a single query for all
 	const { inscritos: allInscritos } = useInscritos();
+	const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; id: string | null; title: string }>({ open: false, id: null, title: '' });
+	const [deleting, setDeleting] = useState(false);
 
 	const stats = [
 		{ icon: FileText, label: 'Mentorias', value: mentorias.length },
 		{ icon: Users2, label: 'Inscrições', value: allInscritos.filter((i) => mentorias.some((m) => m.id === i.mentoria_id)).length },
 		{ icon: Eye, label: 'Publicadas', value: mentorias.filter((m) => m.published).length }
 	];
+
+	const handleDelete = async () => {
+		if (!deleteDialog.id) return;
+		setDeleting(true);
+		try {
+			await deleteMentoria(deleteDialog.id);
+			setDeleteDialog({ open: false, id: null, title: '' });
+			toast({ title: 'Mentoria deletada', description: 'A mentoria foi removida com sucesso.', variant: 'success' });
+		} catch (err) {
+			// Error already handled in hook
+		} finally {
+			setDeleting(false);
+		}
+	};
 
 	if (mentoriasLoading) {
 		return (
@@ -86,23 +105,52 @@ export default function MentorIndex() {
 				) : (
 				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{mentorias.map((m) => (
-						<Link key={m.id} to={`/dashboard/mentor/mentorias/${m.id}`} className="block">
-							<Card padding="md" hover>
-								<div className="flex items-start justify-between">
-									<div className="flex-1 min-w-0">
-										<div className="font-medium text-text-primary truncate">{m.title}</div>
-										<div className="text-sm text-text-secondary mt-1">{m.price === 0 ? 'Grátis' : `MZN ${m.price}`}</div>
-										<div className="text-xs text-text-secondary mt-1">
-											{m.published ? 'Publicada' : 'Rascunho'}
-										</div>
+						<Card key={m.id} padding="md" hover>
+							<div className="flex items-start justify-between mb-3">
+								<div className="flex-1 min-w-0">
+									<div className="font-medium text-text-primary truncate">{m.title}</div>
+									<div className="text-sm text-text-secondary mt-1">{m.price === 0 ? 'Grátis' : `MZN ${m.price}`}</div>
+									<div className="text-xs text-text-secondary mt-1">
+										{m.published ? 'Publicada' : 'Rascunho'}
 									</div>
-									<Edit2 size={14} className="text-text-secondary flex-shrink-0 ml-2" />
 								</div>
-							</Card>
-						</Link>
+							</div>
+							<div className="flex gap-2">
+								<Button
+									variant="secondary"
+									size="sm"
+									fullWidth
+									onClick={() => navigate(`/dashboard/mentor/mentorias/${m.id}`)}
+									icon={<Edit2 size={16} />}
+								>
+									Editar
+								</Button>
+								<Button
+									variant="danger"
+									size="sm"
+									fullWidth
+									onClick={() => setDeleteDialog({ open: true, id: m.id, title: m.title })}
+									icon={<Trash2 size={16} />}
+								>
+									Apagar
+								</Button>
+							</div>
+						</Card>
 					))}
 				</div>
 				)}
+			</div>
+			<ConfirmDialog
+				open={deleteDialog.open}
+				onClose={() => setDeleteDialog({ open: false, id: null, title: '' })}
+				onConfirm={handleDelete}
+				title="Apagar mentoria"
+				description={`Tem certeza que deseja apagar a mentoria "${deleteDialog.title}"? Esta ação não pode ser desfeita.`}
+				confirmText="Apagar"
+				cancelText="Cancelar"
+				variant="danger"
+				loading={deleting}
+			/>
 			</div>
 		</DashboardShell>
 	);

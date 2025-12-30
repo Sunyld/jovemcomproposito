@@ -1,0 +1,11 @@
+{
+  "//": "Configuração SPA: garante que todas as rotas sejam servidas por index.html. NÃO remover este arquivo ou as rotas /dashboard/* quebrarão em produção.",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+
+

@@ -25,7 +25,25 @@ Futurista, dark, acentos roxo/violeta. Frontend responsivo com UI/UX refinada.
    ```
 
 ## Deploy
-- Vercel/Netlify: configure as env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`). Build command `npm run build`, output `dist`.
+- **SPA na Vercel:** este projeto é uma Single Page Application usando `BrowserRouter`. Para evitar erros 404 em rotas internas (`/dashboard/*`, `/login`, etc) em produção, o arquivo `vercel.json` na raiz é **obrigatório**.
+  - Build command: `npm run build`
+  - Output directory: `dist`
+  - Root directory do projeto: esta pasta (`project`)
+  - Configuração mínima da Vercel:
+    - Framework preset: **Vite**
+    - Output: **dist**
+  - O arquivo `vercel.json` contém:
+    ```json
+    {
+      "rewrites": [
+        {
+          "source": "/(.*)",
+          "destination": "/index.html"
+        }
+      ]
+    }
+    ```
+  - **Não remova nem altere essa regra**, ou acessos diretos como `/dashboard/admin` e recarregamentos em rotas internas voltarão a retornar 404 na Vercel.
 
 ## Estrutura
 - `src/components`: Header, Hero, Carousel, Cards, Modal, Toast, etc.

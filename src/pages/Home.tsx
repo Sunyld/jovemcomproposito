@@ -28,28 +28,27 @@ export default function Home() {
 					<p className="text-sm uppercase tracking-widest text-purple">Quem Somos</p>
 					<h2 className="font-display text-2xl sm:text-3xl mt-3 text-text-primary">Jovens movidos por propósito</h2>
 					<p className="mt-4 text-text-secondary text-base sm:text-lg">
-						Somos um movimento de jovens cristãos, comissionados a equipar outros jovens ao redor do mundo com ferramentas que os ajudem a descobrir o seu propósito,
-						maximizar o seu potencial e deixar um legado impactante para a próxima geração.
+						Somos um movimento de jovens cristãos, comissionados em equipar outros jovens ao redor do mundo de ferramentas que os auxiliem descobrir seus propósitos, maximizar seu potencial e deixarem um legado impactante para a próxima geração.
 					</p>
 				</div>
 			</section>
 			<HeroSection
 				eyebrow="Visão"
 				title="Visão"
-				description="Acelerar jornadas com conexões autênticas. Unimos mentores experientes e aprendizes motivados para criar um ambiente de crescimento contínuo, com recursos, encontros e projetos reais."
+				description="Que todo jovem descubra seu propósito, maximize seu potencial e deixe um legado impactante para a próxima geração de jovens."
 				imageUrl={visionSvg}
 			/>
 			<HeroSection
 				eyebrow="Missão"
 				title="Missão"
-				description="Mentorias acessíveis e de impacto. Curadoria de mentorias de alta qualidade, com UX imersiva e ferramentas práticas para que cada encontro se transforme em resultados concretos."
+				description="Capacitar os jovens ao redor do mundo através do discipulado, mentoria, cursos, palestras e seminários."
 				imageUrl={missionSvg}
 				reverse
 			/>
 			<HeroSection
 				eyebrow="Valores"
 				title="Valores"
-				description="Integridade e pureza, excelência, e servir ao próximo. Construímos relações baseadas em transparência e colaboração, celebrando conquistas e aprendizados ao longo do caminho."
+				description="Integridade e pureza, excelência e serviço ao próximo."
 				imageUrl={valuesSvg}
 			/>
 			<FeatureHighlights />

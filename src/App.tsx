@@ -40,6 +40,7 @@ import { ThemeProvider } from './components/ThemeProvider';
 import { AuthProvider } from './hooks/useAuth';
 import { DevocionalProvider } from './contexts/DevocionalContext';
 import Doacao from './pages/Doacao';
+import NotFound from './pages/NotFound';
 import LandingLayout from './layouts/LandingLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 
@@ -226,7 +227,7 @@ function App() {
 							}
 						/>
 					</Route>
-						<Route path="*" element={<Navigate to="/" />} />
+						<Route path="*" element={<NotFound />} />
 					</Routes>
 					<ToastViewport />
 				</BrowserRouter>

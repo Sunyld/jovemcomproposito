@@ -95,7 +95,6 @@ export async function createNotification(userId: string, type: Notification['typ
 		.single();
 
 	if (error) {
-		console.error('Erro ao criar notificação:', error);
 		throw error;
 	}
 
