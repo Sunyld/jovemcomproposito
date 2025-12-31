@@ -17,7 +17,6 @@ export default function OAuthCallback() {
 				const errorDescription = searchParams.get('error_description');
 				
 				if (error) {
-					console.error('OAuth error:', error, errorDescription);
 					toast({ 
 						title: 'Erro na autenticação', 
 						description: errorDescription || 'Não foi possível fazer login com Google. Tente novamente.', 
@@ -36,7 +35,6 @@ export default function OAuthCallback() {
 				const errorDescriptionHash = hashParams.get('error_description');
 				
 				if (errorHash) {
-					console.error('OAuth hash error:', errorHash, errorDescriptionHash);
 					toast({ 
 						title: 'Erro na autenticação', 
 						description: errorDescriptionHash || 'Não foi possível fazer login com Google. Tente novamente.', 
@@ -57,9 +55,7 @@ export default function OAuthCallback() {
 				while (attempts < maxAttempts && !session?.user) {
 					const { data: { session: sessionData }, error: sessionError } = await supabase.auth.getSession();
 					
-					if (sessionError && attempts === 0) {
-						console.error('Error getting session:', sessionError);
-					}
+					// Session error handled below
 					
 					if (sessionData?.user) {
 						session = sessionData;
@@ -74,7 +70,6 @@ export default function OAuthCallback() {
 				}
 
 				if (!session?.user) {
-					console.error('No user in session after', maxAttempts, 'attempts');
 					toast({ 
 						title: 'Erro na autenticação', 
 						description: 'Sessão não encontrada. Tente fazer login novamente.', 
@@ -88,7 +83,6 @@ export default function OAuthCallback() {
 
 				await processUser(session.user);
 			} catch (err) {
-				console.error('OAuth callback error:', err);
 				toast({ 
 					title: 'Erro inesperado', 
 					description: 'Ocorreu um erro ao processar sua autenticação. Tente novamente.', 
@@ -102,7 +96,11 @@ export default function OAuthCallback() {
 
 		async function processUser(user: any) {
 			if (!user?.email) {
-				console.error('No email in user object');
+				toast({ 
+					title: 'Erro na autenticação', 
+					description: 'Email não encontrado. Tente fazer login novamente.', 
+					variant: 'error' 
+				});
 				navigate('/login?error=no_email');
 				return;
 			}
@@ -194,7 +192,11 @@ export default function OAuthCallback() {
 					});
 
 				if (createError) {
-					console.error('Error creating profile:', createError);
+					toast({ 
+						title: 'Erro ao criar perfil', 
+						description: 'Não foi possível criar seu perfil. Tente novamente.', 
+						variant: 'error' 
+					});
 					navigate('/login?error=profile_creation_failed');
 					return;
 				}
@@ -214,7 +216,11 @@ export default function OAuthCallback() {
 			}
 
 			if (profileError) {
-				console.error('Error loading profile:', profileError);
+				toast({ 
+					title: 'Erro ao carregar perfil', 
+					description: 'Não foi possível carregar seu perfil. Tente fazer login novamente.', 
+					variant: 'error' 
+				});
 				navigate('/login?error=profile_load_failed');
 				return;
 			}

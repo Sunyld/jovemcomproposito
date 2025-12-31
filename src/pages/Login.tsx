@@ -102,7 +102,6 @@ export default function Login() {
 				setLoading(false);
 			}
 		} catch (err: any) {
-			console.error('Login error:', err);
 			toast({ 
 				title: 'Erro ao fazer login', 
 				description: err.message || 'Erro desconhecido. Tente novamente.', 
@@ -179,15 +178,20 @@ export default function Login() {
 								try {
 									const result = await signInWithGoogle();
 									if (result?.error) {
-										console.error('Google login error:', result.error);
+										toast({ 
+											title: 'Erro ao fazer login', 
+											description: result.error.message || 'Não foi possível fazer login com Google. Tente novamente.', 
+											variant: 'error' 
+										});
 										setGoogleLoading(false);
-									} else {
-										// Se não houver erro, o usuário será redirecionado automaticamente
-										// Não resetar loading aqui pois o redirecionamento vai acontecer
-										console.log('Google OAuth iniciado, aguardando redirecionamento...');
 									}
-								} catch (err) {
-									console.error('Google login exception:', err);
+									// Se não houver erro, o usuário será redirecionado automaticamente
+								} catch (err: any) {
+									toast({ 
+										title: 'Erro ao fazer login', 
+										description: err.message || 'Não foi possível fazer login com Google. Tente novamente.', 
+										variant: 'error' 
+									});
 									setGoogleLoading(false);
 								}
 							}}

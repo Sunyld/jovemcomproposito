@@ -101,7 +101,6 @@ export default function FileUploader({
 			toast({ title: 'Upload concluído', variant: 'success' });
 			onUploaded(filePath, publicUrl);
 		} catch (err: any) {
-			console.error('Upload error:', err);
 			toast({ 
 				title: 'Falha no upload', 
 				description: err?.message ?? 'Erro ao fazer upload do arquivo. Verifique se o arquivo não é muito grande e tente novamente.', 

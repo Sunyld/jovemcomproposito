@@ -165,7 +165,6 @@ function useProvideAuth() {
 						.single();
 					
 					if (createError) {
-						console.error('Error creating profile:', createError);
 						// Fallback to basic profile
 						if (active) {
 							setProfile({
@@ -225,7 +224,6 @@ function useProvideAuth() {
 			const normalizedEmail = email.trim().toLowerCase();
 			const { data, error } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password });
 			if (error) {
-				console.error('Supabase signIn error:', error);
 				// Mensagens de erro mais amigáveis
 				let errorMessage = error.message;
 				if (error.message.includes('Invalid login credentials')) {
@@ -247,7 +245,6 @@ function useProvideAuth() {
 			}
 			return { data, error: null };
 		} catch (err: any) {
-			console.error('SignIn exception:', err);
 			const error = { message: err.message || 'Erro ao conectar com o servidor' };
 			toast({ title: 'Erro ao entrar', description: error.message, variant: 'error' });
 			return { data: null, error };
@@ -267,7 +264,6 @@ function useProvideAuth() {
 			});
 			
 			if (error) {
-				console.error('Google OAuth error:', error);
 				toast({ title: 'Erro Google', description: error.message || 'Não foi possível conectar com Google', variant: 'error' });
 				return { error };
 			}
@@ -277,7 +273,6 @@ function useProvideAuth() {
 			// O redirect acontece automaticamente, não precisamos fazer nada aqui
 			return { data, error: null };
 		} catch (err: any) {
-			console.error('Google OAuth exception:', err);
 			toast({ title: 'Erro', description: err.message || 'Erro ao conectar com Google', variant: 'error' });
 			return { error: err };
 		}

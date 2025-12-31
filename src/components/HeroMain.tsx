@@ -14,8 +14,8 @@ export default function HeroMain() {
 					transition={{ duration: 0.7 }}
 				>
 					<h1 className="font-display text-4xl sm:text-5xl lg:text-6xl leading-tight text-text-primary">
-						Aprenda com mentores{' '}
-						<span className="bg-clip-text text-transparent bg-gradient-to-r from-purple to-purple-light">extraordinários</span>
+						Mais do que simplesmente viver,{' '}
+						<span className="bg-clip-text text-transparent bg-gradient-to-r from-purple to-purple-light">viva com propósito</span>
 					</h1>
 					<p className="mt-4 text-text-secondary max-w-xl">
 						Conecte-se a profissionais experientes, participe de mentorias online ou presenciais e acelere sua jornada com conteúdos práticos,

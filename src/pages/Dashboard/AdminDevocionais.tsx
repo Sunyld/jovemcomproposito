@@ -30,6 +30,7 @@ export default function AdminDevocionais() {
 	const [deleteModalOpen, setDeleteModalOpen] = useState<string | null>(null);
 	const [publishModalOpen, setPublishModalOpen] = useState<string | null>(null);
 	const [publishing, setPublishing] = useState<string | null>(null);
+	const [creating, setCreating] = useState(false);
 	const [tipo, setTipo] = useState<'series' | 'single'>('series');
 	const [seriesTitle, setSeriesTitle] = useState('');
 	const [items, setItems] = useState<DevocionalItemForm[]>([]);
@@ -166,6 +167,7 @@ export default function AdminDevocionais() {
 			}
 		}
 
+		setCreating(true);
 		try {
 			if (editing) {
 				await updateDevocionalSeries(editing.id, { title: seriesTitle });
@@ -194,6 +196,8 @@ export default function AdminDevocionais() {
 			handleCloseModal();
 		} catch (err) {
 			// Error already handled in hook
+		} finally {
+			setCreating(false);
 		}
 	}
 
@@ -536,8 +540,10 @@ export default function AdminDevocionais() {
 							variant="primary"
 							size="md"
 							fullWidth
+							loading={creating}
+							disabled={creating}
 						>
-							{editing ? 'Salvar alterações' : 'Criar e Publicar'}
+							{editing ? 'Salvar alterações' : creating ? 'Publicando...' : 'Criar e Publicar'}
 						</Button>
 					</div>
 				</form>

@@ -17,7 +17,7 @@ import { FileText } from 'lucide-react';
 
 export default function Home() {
 	const { mentorias, loading } = useMentorias({ published: true });
-	const featuredMentorias = mentorias.slice(0, 6);
+	const featuredMentorias = Array.isArray(mentorias) ? mentorias.slice(0, 6) : [];
 
 	return (
 		<div>
@@ -77,7 +77,7 @@ export default function Home() {
 					/>
 				) : (
 					<div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-						{featuredMentorias.map((m) => <CardMentoria key={m.id} m={m} />)}
+						{featuredMentorias.map((m: any) => <CardMentoria key={m.id} m={m} />)}
 					</div>
 				)}
 			</section>

@@ -1,5 +1,8 @@
 {
+<<<<<<< HEAD
   "//": "Configuração SPA: garante que todas as rotas sejam servidas por index.html. NÃO remover este arquivo ou as rotas /dashboard/* quebrarão em produção.",
+=======
+>>>>>>> f238ec3 (refactor: remove Modal and standardize dialogs with ConfirmDialog and FormDialog)
   "rewrites": [
     {
       "source": "/(.*)",
@@ -8,4 +11,7 @@
   ]
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f238ec3 (refactor: remove Modal and standardize dialogs with ConfirmDialog and FormDialog)

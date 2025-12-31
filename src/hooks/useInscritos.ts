@@ -64,7 +64,6 @@ export async function createInscricao(mentoriaId: string, message?: string) {
 	}
 
 	await queryClient.invalidateQueries({ queryKey: [INSCRITOS_KEY] });
-	toast({ title: 'Inscrição criada', variant: 'success' });
 	return data;
 }
 
