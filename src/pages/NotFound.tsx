@@ -1,32 +1,3 @@
-export default function NotFound() {
-	return (
-		<div className="min-h-screen bg-background text-text-primary flex flex-col items-center justify-center px-4">
-			<div className="max-w-md text-center space-y-4">
-				<p className="text-xs uppercase tracking-[0.25em] text-purple/70">404</p>
-				<h1 className="text-3xl sm:text-4xl font-display font-semibold">Página não encontrada</h1>
-				<p className="text-text-secondary">
-					Pareçe que este link não existe mais ou foi digitado incorretamente. Você pode voltar para a página inicial
-					ou acessar o seu dashboard se já estiver autenticado.
-				</p>
-				<div className="flex flex-col sm:flex-row gap-3 justify-center mt-4">
-					<a
-						href="/"
-						className="inline-flex justify-center rounded-full px-5 py-2.5 bg-purple text-background text-sm font-medium hover:bg-purple-light transition-colors"
-					>
-						Voltar para Home
-					</a>
-					<a
-						href="/dashboard/user"
-						className="inline-flex justify-center rounded-full px-5 py-2.5 border border-white/15 text-sm font-medium text-text-secondary hover:bg-white/5 transition-colors"
-					>
-						Ir para o Dashboard
-					</a>
-				</div>
-			</div>
-		</div>
-	);
-}
-
 import { Link } from 'react-router-dom';
 import { Home, ArrowLeft } from 'lucide-react';
 
@@ -60,5 +31,6 @@ export default function NotFound() {
 		</div>
 	);
 }
+
 
 

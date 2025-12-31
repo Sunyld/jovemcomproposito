@@ -9,7 +9,7 @@ type ConfirmDialogProps = {
 	description: string;
 	confirmText?: string;
 	cancelText?: string;
-	variant?: 'danger' | 'default';
+	variant?: 'danger' | 'default' | 'info';
 	loading?: boolean;
 };
 
@@ -45,7 +45,7 @@ export default function ConfirmDialog({
 					</Button>
 					<Button
 						type="button"
-						variant={variant === 'danger' ? 'danger' : 'primary'}
+						variant={variant === 'danger' ? 'danger' : variant === 'info' ? 'primary' : 'primary'}
 						size="md"
 						fullWidth
 						onClick={handleConfirm}

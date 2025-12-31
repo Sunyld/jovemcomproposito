@@ -555,7 +555,7 @@ export default function AdminDevocionais() {
 				onClose={() => setDeleteModalOpen(null)}
 				onConfirm={() => deleteModalOpen && handleDelete(deleteModalOpen)}
 				title="Deletar Série"
-				message="Tem certeza que deseja deletar esta série? Esta ação não pode ser desfeita."
+				description="Tem certeza que deseja deletar esta série? Esta ação não pode ser desfeita."
 				confirmText="Deletar"
 				variant="danger"
 			/>
@@ -593,10 +593,10 @@ export default function AdminDevocionais() {
 						}
 					}}
 					title="Publicar Devocional"
-					message="Ao publicar, todos os outros devocionais ativos serão desativados automaticamente. Todos os usuários receberão uma notificação. Continuar?"
+					description="Ao publicar, todos os outros devocionais ativos serão desativados automaticamente. Todos os usuários receberão uma notificação. Continuar?"
 					confirmText={publishing ? 'Publicando...' : 'Publicar'}
 					variant="info"
-					disabled={!!publishing}
+					loading={!!publishing}
 				/>
 			)}
 		</DashboardShell>

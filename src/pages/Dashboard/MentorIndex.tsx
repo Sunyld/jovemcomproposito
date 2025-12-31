@@ -151,7 +151,6 @@ export default function MentorIndex() {
 				variant="danger"
 				loading={deleting}
 			/>
-			</div>
 		</DashboardShell>
 	);
 }

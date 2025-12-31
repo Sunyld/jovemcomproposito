@@ -102,7 +102,8 @@ export default function MentorInscricoes() {
 								onReject={() => setRejectDialog({ open: true, id: inscrito.id })}
 							/>
 						))}
-				</div>
+					</div>
+				)}
 			</div>
 			<ConfirmDialog
 				open={approveDialog.open}
@@ -110,7 +111,7 @@ export default function MentorInscricoes() {
 				onConfirm={handleApprove}
 				title="Aprovar inscrição"
 				description="Tem certeza que deseja aprovar esta inscrição? O usuário terá acesso completo à mentoria."
-				confirmText="Aprovar"
+				confirmText={processing ? 'Aprovando...' : 'Aprovar'}
 				cancelText="Cancelar"
 				loading={processing}
 			/>
@@ -120,14 +121,11 @@ export default function MentorInscricoes() {
 				onConfirm={handleReject}
 				title="Rejeitar inscrição"
 				description="Tem certeza que deseja rejeitar esta inscrição? O acesso será negado ao usuário."
-				confirmText="Rejeitar"
+				confirmText={processing ? 'Rejeitando...' : 'Rejeitar'}
 				cancelText="Cancelar"
 				variant="danger"
 				loading={processing}
 			/>
-					</div>
-				)}
-			</div>
 		</DashboardShell>
 	);
 }
@@ -218,5 +216,3 @@ function InscritoCard({ inscrito, onApprove, onReject }: { inscrito: any; onAppr
 		</Card>
 	);
 }
-
-

@@ -4,11 +4,8 @@ import { useProfile } from '../hooks/useProfiles';
 import { createInscricao } from '../hooks/useInscritos';
 import { getSignedUrl } from '../hooks/useStorage';
 import { useUserInscricoes } from '../hooks/useInscritos';
-<<<<<<< HEAD
-import Modal from '../components/Modal';
-=======
->>>>>>> f238ec3 (refactor: remove Modal and standardize dialogs with ConfirmDialog and FormDialog)
 import ConfirmDialog from '../components/ConfirmDialog';
+import Modal from '../components/Modal';
 import { useState } from 'react';
 import { toast } from '../components/Toast';
 import { useAuth } from '../hooks/useAuth';
@@ -87,15 +84,7 @@ export default function MentoriaPage() {
 		try {
 			await createInscricao(mentoria.id);
 			setConfirmOpen(false);
-<<<<<<< HEAD
-			toast({ 
-				title: 'Pedido enviado com sucesso', 
-				description: 'O mentor será notificado sobre sua solicitação.', 
-				variant: 'success' 
-			});
-=======
 			toast({ title: 'Pedido enviado com sucesso', description: 'Aguarde a aprovação do mentor.', variant: 'success' });
->>>>>>> f238ec3 (refactor: remove Modal and standardize dialogs with ConfirmDialog and FormDialog)
 		} catch (err) {
 			// Error already handled in hook
 		} finally {
@@ -140,11 +129,7 @@ export default function MentoriaPage() {
 						<div className="mt-4 flex flex-col gap-2">
 							{!userInscricao ? (
 								<button onClick={() => setConfirmOpen(true)} className="w-full px-4 py-2 rounded-lg bg-purple text-white hover:bg-purple-light transition-colors">
-<<<<<<< HEAD
-									Pedir para participar da mentoria
-=======
 									Solicitar participação na mentoria
->>>>>>> f238ec3 (refactor: remove Modal and standardize dialogs with ConfirmDialog and FormDialog)
 								</button>
 							) : hasAccess ? (
 								<button
@@ -170,24 +155,14 @@ export default function MentoriaPage() {
 			</aside>
 			<ConfirmDialog
 				open={confirmOpen}
-<<<<<<< HEAD
-				onClose={() => setConfirmOpen(false)}
-				onConfirm={handleInscricao}
-				title="Confirmar participação"
-				description="Tem certeza que deseja solicitar participação nesta mentoria?"
-				confirmText="Confirmar"
-				cancelText="Cancelar"
-				loading={submitting}
-=======
 				onClose={() => !submitting && setConfirmOpen(false)}
 				onConfirm={handleInscricao}
 				title="Confirmar participação"
-				message="Deseja solicitar participação nesta mentoria? O mentor será notificado e poderá aprovar sua solicitação."
+				description="Deseja solicitar participação nesta mentoria? O mentor será notificado e poderá aprovar sua solicitação."
 				confirmText={submitting ? 'Enviando...' : 'Confirmar'}
 				cancelText="Cancelar"
 				variant="info"
 				disabled={submitting}
->>>>>>> f238ec3 (refactor: remove Modal and standardize dialogs with ConfirmDialog and FormDialog)
 			/>
 			<Modal title="Contactar mentor" open={contact} onClose={() => setContact(false)}>
 				<p className="text-sm text-text-secondary">Entre em contato com {mentorProfile?.full_name || 'o mentor'} para finalizar a inscrição.</p>
@@ -198,5 +173,3 @@ export default function MentoriaPage() {
 		</div>
 	);
 }
-
-

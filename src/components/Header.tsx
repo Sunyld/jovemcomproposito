@@ -2,7 +2,8 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useState } from 'react';
 import { Menu, X, LogIn, UserPlus, Moon, Sun, Settings } from 'lucide-react';
-import logo from '../assets/images/logo.svg';
+import logoDark from '../assets/images/logoD.png';
+import logoLight from '../assets/images/logoL.png';
 import { useTheme } from './ThemeProvider';
 
 export function Header() {
@@ -16,7 +17,7 @@ export function Header() {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="flex h-16 items-center justify-between">
 					<Link to="/" className="flex items-center gap-3">
-						<img src={logo} alt="Jovem com Propósito logo" className="h-9 w-9" />
+						<img src={theme === 'dark' ? logoDark : logoLight} alt="Jovem com Propósito logo" className="h-9 w-9" />
 						<span className="font-display text-lg tracking-wide text-text-primary">Jovem com Propósito</span>
 					</Link>
 					<nav className="hidden md:flex items-center gap-8" aria-label="Navegação principal">
@@ -95,5 +96,7 @@ export function Header() {
 		</header>
 	);
 }
+
+
 
 
