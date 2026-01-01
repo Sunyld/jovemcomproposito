@@ -76,7 +76,11 @@ export async function createMentoria(mentoria: Omit<Mentoria, 'id' | 'created_at
 	}
 
 	await queryClient.invalidateQueries({ queryKey: [MENTORIAS_KEY] });
-	toast({ title: 'Mentoria criada', variant: 'success' });
+	toast({ 
+		title: 'Mentoria criada com sucesso!', 
+		description: 'Sua mentoria foi salva. Você pode publicá-la quando estiver pronto.',
+		variant: 'success' 
+	});
 	return data;
 }
 
@@ -89,7 +93,11 @@ export async function updateMentoria(id: string, updates: Partial<Mentoria>) {
 	}
 
 	await queryClient.invalidateQueries({ queryKey: [MENTORIAS_KEY] });
-	toast({ title: 'Mentoria atualizada', variant: 'success' });
+	toast({ 
+		title: 'Mentoria atualizada com sucesso!', 
+		description: 'As alterações foram salvas.',
+		variant: 'success' 
+	});
 	return data;
 }
 
@@ -102,5 +110,9 @@ export async function deleteMentoria(id: string) {
 	}
 
 	await queryClient.invalidateQueries({ queryKey: [MENTORIAS_KEY] });
-	toast({ title: 'Mentoria deletada', variant: 'success' });
+	toast({ 
+		title: 'Mentoria deletada com sucesso!', 
+		description: 'A mentoria foi removida permanentemente.',
+		variant: 'success' 
+	});
 }

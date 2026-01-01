@@ -37,7 +37,11 @@ export async function createCategory(name: string) {
 	}
 
 	await queryClient.invalidateQueries({ queryKey: CATEGORY_KEY });
-	toast({ title: 'Categoria criada', variant: 'success' });
+	toast({ 
+		title: 'Categoria criada com sucesso!', 
+		description: `A categoria "${name}" foi adicionada.`,
+		variant: 'success' 
+	});
 	return data;
 }
 
@@ -51,7 +55,11 @@ export async function updateCategory(id: string, name: string) {
 	}
 
 	await queryClient.invalidateQueries({ queryKey: CATEGORY_KEY });
-	toast({ title: 'Categoria atualizada', variant: 'success' });
+	toast({ 
+		title: 'Categoria atualizada com sucesso!', 
+		description: 'As alterações foram salvas.',
+		variant: 'success' 
+	});
 	return data;
 }
 
@@ -64,5 +72,9 @@ export async function deleteCategory(id: string) {
 	}
 
 	await queryClient.invalidateQueries({ queryKey: CATEGORY_KEY });
-	toast({ title: 'Categoria deletada', variant: 'success' });
+	toast({ 
+		title: 'Categoria deletada com sucesso!', 
+		description: 'A categoria foi removida permanentemente.',
+		variant: 'success' 
+	});
 }

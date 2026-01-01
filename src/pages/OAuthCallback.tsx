@@ -127,7 +127,7 @@ export default function OAuthCallback() {
 				// Mostrar toast de sucesso
 				toast({ 
 					title: 'Login realizado com sucesso!', 
-					description: `Bem-vindo! Redirecionando para seu dashboard...`, 
+					description: `Bem-vindo! Você pode acessar seu dashboard agora.`, 
 					variant: 'success' 
 				});
 				

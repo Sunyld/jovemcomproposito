@@ -47,18 +47,67 @@ export async function updateProfile(userId: string, updates: Partial<Profile>) {
 	}
 
 	await queryClient.invalidateQueries({ queryKey: [PROFILES_KEY] });
-	toast({ title: 'Perfil atualizado', variant: 'success' });
+	toast({ 
+		title: 'Perfil atualizado com sucesso!', 
+		description: 'As alterações foram salvas.',
+		variant: 'success' 
+	});
 	return data;
 }
 
 export async function updateRole(userId: string, role: Profile['role']) {
-	return updateProfile(userId, { role });
+	const { data, error } = await supabase.from('profiles').update({ role }).eq('id', userId).select().single();
+	
+	if (error) {
+		toast({ title: 'Erro ao atualizar função', description: error.message, variant: 'error' });
+		throw error;
+	}
+	
+	await queryClient.invalidateQueries({ queryKey: [PROFILES_KEY] });
+	const roleNames: Record<string, string> = {
+		admin: 'administrador',
+		mentor: 'mentor',
+		user: 'usuário',
+		visitor: 'visitante',
+	};
+	toast({ 
+		title: 'Função atualizada com sucesso!', 
+		description: `O usuário agora tem função de ${roleNames[role] || role}.`,
+		variant: 'success' 
+	});
+	return data;
 }
 
 export async function approveMentor(userId: string) {
-	return updateProfile(userId, { is_mentor_approved: true });
+	const { data, error } = await supabase.from('profiles').update({ is_mentor_approved: true }).eq('id', userId).select().single();
+	
+	if (error) {
+		toast({ title: 'Erro ao aprovar mentor', description: error.message, variant: 'error' });
+		throw error;
+	}
+	
+	await queryClient.invalidateQueries({ queryKey: [PROFILES_KEY] });
+	toast({ 
+		title: 'Mentor aprovado com sucesso!', 
+		description: 'O mentor agora pode criar e publicar mentorias.',
+		variant: 'success' 
+	});
+	return data;
 }
 
 export async function rejectMentor(userId: string) {
-	return updateProfile(userId, { is_mentor_approved: false });
+	const { data, error } = await supabase.from('profiles').update({ is_mentor_approved: false }).eq('id', userId).select().single();
+	
+	if (error) {
+		toast({ title: 'Erro ao rejeitar mentor', description: error.message, variant: 'error' });
+		throw error;
+	}
+	
+	await queryClient.invalidateQueries({ queryKey: [PROFILES_KEY] });
+	toast({ 
+		title: 'Mentor rejeitado', 
+		description: 'O mentor não poderá criar mentorias até ser aprovado novamente.',
+		variant: 'success' 
+	});
+	return data;
 }

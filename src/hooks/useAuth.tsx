@@ -371,7 +371,11 @@ function useProvideAuth() {
 			toast({ title: 'Erro ao atualizar', description: error.message, variant: 'error' });
 		} else {
 			setProfile(data);
-			toast({ title: 'Perfil atualizado', variant: 'success' });
+			toast({ 
+				title: 'Perfil atualizado com sucesso!', 
+				description: 'Suas alterações foram salvas.',
+				variant: 'success' 
+			});
 		}
 		return { data, error };
 	}
