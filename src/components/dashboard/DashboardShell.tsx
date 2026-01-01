@@ -51,6 +51,7 @@ const menuByRole: Record<Role, MenuItem[]> = {
 	],
 	mentor: [
 		{ label: 'Painel', to: '/dashboard/mentor', icon: LayoutDashboard },
+		{ label: 'Minhas Mentorias', to: '/dashboard/mentor/mentorias', icon: FileText },
 		{ label: 'Criar mentoria', to: '/dashboard/mentor/mentorias/new', icon: FilePlus2 },
 		{ label: 'Inscrições', to: '/dashboard/mentor/inscricoes', icon: Users2 },
 		{ label: 'Feedback', to: '/dashboard/mentor/feedback', icon: Star },

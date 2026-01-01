@@ -103,7 +103,7 @@ export default function MentorMentoriaEdit() {
 				await updateMentoria(id, mentoriaData);
 			}
 
-			navigate('/dashboard/mentor');
+			navigate('/dashboard/mentor/mentorias');
 		} catch (err) {
 			// Error already handled in hook
 		} finally {

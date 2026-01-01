@@ -12,6 +12,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import VerifyEmail from './pages/VerifyEmail';
 import MentorIndex from './pages/Dashboard/MentorIndex';
+import MentorMentorias from './pages/Dashboard/MentorMentorias';
 import MentorMentoriaEdit from './pages/Dashboard/MentorMentoriaEdit';
 import MentorInscricoes from './pages/Dashboard/MentorInscricoes';
 import MentorFeedback from './pages/Dashboard/MentorFeedback';
@@ -80,7 +81,15 @@ function App() {
 							}
 						/>
 						<Route
-							path="/dashboard/mentor/mentorias/:id?"
+							path="/dashboard/mentor/mentorias"
+							element={
+								<ProtectedRoute roles={['mentor', 'admin']}>
+									<MentorMentorias />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/dashboard/mentor/mentorias/:id"
 							element={
 								<ProtectedRoute roles={['mentor', 'admin']}>
 									<MentorMentoriaEdit />
