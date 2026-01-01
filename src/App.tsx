@@ -22,6 +22,7 @@ import AdminAdmins from './pages/Dashboard/AdminAdmins';
 import AdminUsuarios from './pages/Dashboard/AdminUsuarios';
 import AdminCategorias from './pages/Dashboard/AdminCategorias';
 import AdminMetricas from './pages/Dashboard/AdminMetricas';
+import AdminRelatorios from './pages/Dashboard/AdminRelatorios';
 import AdminDoacoes from './pages/Dashboard/AdminDoacoes';
 import AdminDevocionais from './pages/Dashboard/AdminDevocionais';
 import AdminProjetos from './pages/Dashboard/AdminProjetos';
@@ -158,6 +159,14 @@ function App() {
 							element={
 								<ProtectedRoute roles={['admin']}>
 									<AdminMetricas />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/dashboard/admin/relatorios"
+							element={
+								<ProtectedRoute roles={['admin']}>
+									<AdminRelatorios />
 								</ProtectedRoute>
 							}
 						/>

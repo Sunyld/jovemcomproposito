@@ -44,6 +44,7 @@ const menuByRole: Record<Role, MenuItem[]> = {
 		{ label: 'Devocionais', to: '/dashboard/admin/devocionais', icon: Calendar },
 		{ label: 'Projetos', to: '/dashboard/admin/projetos', icon: Layers },
 		{ label: 'Métricas', to: '/dashboard/admin/metricas', icon: PieChart },
+		{ label: 'Relatórios', to: '/dashboard/admin/relatorios', icon: BarChart3 },
 		{ label: 'Usuários', to: '/dashboard/admin/usuarios', icon: UserCog },
 		{ label: 'Doações', to: '/dashboard/admin/doacoes', icon: CreditCard },
 		{ label: 'Notificações', to: '/dashboard/notifications', icon: Bell },
